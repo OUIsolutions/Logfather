@@ -43,7 +43,8 @@ if action == "set_profile" or action == "set" then
     profile_obj.token = token
     profile_obj.chat_id = chat_id
     set_prop("profiles",profiles)
-else if action == "send" or action == "send_message" then 
+    print("Profile '"..profile.."' has been set successfully")
+elseif action == "send" or action == "send_message" then 
     local profile =  argv.get_flag_arg_by_index({ "profile","p" },1)
      if not profile then
         print("Profile name is required")
@@ -75,7 +76,18 @@ else if action == "send" or action == "send_message" then
             id_chat = "-"..profile_obj.chat_id
     }, luabear.fetch)
     session.sendMessage({ text = message })
+    print("Message sent successfully to profile '"..profile.."'")
+elseif action == "list_profiles" or action == "list" then
+    if #profiles == 0 then
+        print("No profiles found")
+        return
+    end
+    print("Available profiles:")
+    for i=1,#profiles do
+        local profile = profiles[i]
+        print("  - "..profile.name.." (Chat ID: "..tostring(profile.chat_id)..")")
+    end
 else 
     print("Unknown action: "..tostring(action))
-end
+    print("Available actions: set_profile, send_message, list_profiles")
 end
