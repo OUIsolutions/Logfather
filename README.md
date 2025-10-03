@@ -9,5 +9,10 @@ vibescript logfather list_profiles
 
 send message
 ```bash
-vibescript logfather send_message --profile <profile> --message "your message"
+vibescript logfather send_message --profile <profile> --message "<message>"
+```
+
+send message with file
+```bash
+vibescript logfather send_message --profile <profile> --message_file "<message.txt>"
 ```
