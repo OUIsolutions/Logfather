@@ -49,7 +49,13 @@ else if action == "send" or action == "send_message" then
         print("Profile name is required")
         return
      end
-    local message = argv.get_flag_arg_by_index({ "message","m" },1)
+    local profile_obj = get_profile(profile)
+    if not profile_obj then
+        print("Profile not found: "..profile)
+        return
+    end
+    
+     local message = argv.get_flag_arg_by_index({ "message","m" },1)
     if not message then
         local message_file = argv.get_flag_arg_by_index({ "message_file","mf" },1)
         if not message_file then
@@ -62,9 +68,11 @@ else if action == "send" or action == "send_message" then
             return
         end     
     end
+
+
     local session = luaberrante.newTelegramSession({
             token = profile_obj.token,
-            id_chat = profile_obj.chat_id
+            id_chat = "-"..profile_obj.chat_id
     }, luabear.fetch)
     session.sendMessage({ text = message })
 else 
